@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TPN & Lipid Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <h1>TPN Calculator</h1>
+        <h2 class="doaa">Prepared By: Doaa Ramadan</h2>
+
+        <div class="calculator-table">
+            <!-- Row: Weight -->
+            <div class="row">
+                <div class="label">Weight (kg):</div>
+                <div class="range">-</div>
+                <input type="number" id="weight" placeholder="Enter value">
+            </div>
+
+
+             <!-- lipid tube -->
+             <div class="row">
+                <div class="label">Lipid Tube Length (cm):</div>
+                <div class="range">-</div>
+                <input type="number" id="lipidlength" placeholder="Enter value">
+            </div>
+
+             <!-- water tube -->
+             <div class="row">
+                <div class="label">Aqueous Tube Length (cm):</div>
+                <div class="range">-</div>
+                <input type="number" id="aqulength" placeholder="Enter value">
+            </div>
+
+            <!-- Row: TPN Volume -->
+            <div class="row">
+                <div class="label">TPN Volume (ml/kg):</div>
+                <div class="range">50-180 ml/kg/day</div>
+                <input type="number" id="tpn" placeholder="Enter value">
+                <button onclick="calculateTpn()">Calculate</button>
+                <span id="tpnResult"></span>
+            </div>
+
+            <!-- Row: Vitalipids -->
+            <div class="row">
+                <div class="label">Vitalipids (ml/kg):</div>
+                <div class="range">0-4 ml</div>
+                <input type="number" id="vitalipids" placeholder="Enter value">
+                <button onclick="calculateVitalipids()">Calculate</button>
+                <button onclick="calculateVitalipidsPriming()">With Priming</button>
+                <span id="vitaResult"></span>
+                <span id="vitaprimingResult"></span>
+            </div>
+
+            <!-- Row: Intralipids -->
+            <div class="row">
+                <div class="label">Intralipids 20% (g/kg):</div>
+                <div class="range">0.5-4 g</div>
+                <input type="number" id="intralipids" placeholder="Enter value">
+                <button onclick="calculateIntralipids()">Calculate</button>
+                <button onclick="calculateIntralipidPriming()">With Priming</button>
+                <span id="intraResult"></span>
+                <span id="intraprimingResult"></span>
+            </div>
+
+            <!-- Row: Lipid Total -->
+            <div class="row">
+                <div class="label">Lipid Total (ml):</div>
+                <div class="range">-</div>
+                <button onclick="calculateLipidVolume()">Calculate</button>
+                <button onclick="calculateLipidPriming()">With Priming</button>
+                <span id="lipidResult"></span>
+                <span id="lipidprimingResult"></span>
+            </div>
+
+            <!-- Row: Aqua Total -->
+            <div class="row">
+                <div class="label">Aqueous Volume (ml):</div>
+                <div class="range">-</div>
+                <button onclick="calculateAquaVolume()">Calculate</button>
+                <button onclick="calculateaquPriming()">With Priming</button>
+                <span id="aqaResult"></span>
+                <span id="aqaprimingResult"></span>
+            </div>
+
+            <!-- Row: Aminoacids Total -->
+            <div class="row">
+                <div class="label">Aminoacids 10% (g/kg):</div>
+                <div class="range">1-5 g</div>
+                <input type="number" id="aminoacids" placeholder="Enter value">
+                <button onclick="calculateaminoacids()">Calculate</button>
+                <button onclick="calculateaminoPriming()">With Priming</button>
+                <span id="aminoResult"></span>
+                <span id="aminoprimingResult"></span>
+            </div>
+
+            <!-- Row: Dextrose Total -->
+            <div class="row">
+                <div class="label">Dextrose 50% (g/kg):</div>
+                <div class="range">5-16 g</div>
+                <input type="number" id="dextrose" placeholder="Enter value">
+                <button onclick="calculatedextrose()">Calculate</button>
+                <button onclick="calculatedextrosePriming()">With Priming</button>
+                <span id="dextroseResult"></span>
+                <span id="dextroseprimingResult"></span>
+            </div>
+            
+            
+            <!-- Sodium Chloride Strength -->
+             <div class="row">
+                <div class="label">Sodium Chloride Strength:</div>
+                <div class="range">-</div>
+                <select id="sodiumChlorideStrength">
+                    <option value="" disabled selected>Select Strength</option>
+                    <option value="20%">20%</option>
+                    <option value="3%">3%</option>
+                </select>
+            </div>
+
+
+            <!-- Row: Sodium Chloride Total -->
+            <div class="row">
+                <div class="label">Sodium Chloride (mmol/kg):</div>
+                <div class="range">1-8 mmol</div>
+                <input type="number" id="nacl" placeholder="Enter value">
+                <button onclick="calculatenacl()">Calculate</button>
+                <button onclick="calculatenaclPriming()">With Priming</button>
+                <span id="naclResult"></span>
+                <span id="naclprimingResult"></span>
+            </div>
+                
+            <!-- Sodium Acetate -->
+             <div class="row">
+                <div class="label">Sodium Acetate (mmol/kg):</div>
+                <div class="range">0-4 mmol</div>
+                <input type="number" id="sodiumAcetate" placeholder="Enter value">
+                <button onclick="calculateSodiumAcetate()">Calculate</button>
+                <button onclick="calculateSodiumAcetatePriming()">With Priming</button>
+                <span id="naacetateResult"></span>
+                <span id="naacetateprimingResult"></span>
+            </div>
+
+            <!-- Na phosphate Brand -->
+             <div class="row">
+                <div class="label">Sodium Phosphate Brand:</div>
+                <div class="range">-</div>
+                <select id="sodiumPhosphateBrand">
+                    <option value="" disabled selected>Select Brand</option>
+                    <option value="Glucophos">Glucophos</option>
+                    <option value="Phocytan">Phocytan</option>
+                </select>
+            </div>
+
+
+
+            <!-- Sodium Phosphate -->
+             <div class="row">
+                <div class="label">Sodium Phosphate (mmol/kg):</div>
+                <div class="range">0.3-4 mmol</div>
+                <input type="number" id="sodiumPhosphate" placeholder="Enter value">
+                <button onclick="calculateSodiumPhosphate()">Calculate</button>
+                <button onclick="calculateSodiumPhosphatePriming()">With Priming</button>
+                <span id="naphosphateResult"></span>
+                <span id="naphosphateprimingResult"></span>
+            </div>
+            
+            <!-- kcl -->
+             <div class="row">
+                <div class="label">Potassium Chloride (mmol/kg):</div>
+                <div class="range">1-4 mmol</div>
+                <input type="number" id="potassiumChloride" placeholder="Enter value">
+                <button onclick="calculatePotassiumChloride()">Calculate</button>
+                <button onclick="calculatePotassiumChloridePriming()">With Priming</button>
+                <span id="kclResult"></span>
+                <span id="kclprimingResult"></span>
+            </div>
+            
+            <!-- Ca -->
+             <div class="row">
+                <div class="label">Calcium Gluconate (meq/kg):</div>
+                <div class="range">0.3-4 mmol</div>
+                <input type="number" id="calciumGluconate" placeholder="Enter value">
+                <button onclick="calculateCalciumGluconate()">Calculate</button>
+                <button onclick="calculateCalciumGluconatePriming()">With Priming</button>
+                <span id="caResult"></span>
+                <span id="caprimingResult"></span>
+            </div>
+            
+            <!-- Heparin -->
+             <div class="row">
+                 <div class="label">Heparin (unit/ml):</div>
+                 <div class="range">0.5-1 unit/ml</div>
+                 <input type="number" id="heparin" placeholder="Enter value">
+                 <button onclick="calculateHeparin()">Calculate</button>
+                 <button onclick="calculateHeparinPriming()">With Priming</button>
+                 <span id="heparinResult"></span>
+                 <span id="heparinprimingResult"></span>
+                </div>
+                
+                <!-- Multivitamins -->
+                 <div class="row">
+                    <div class="label">Multivitamins (ml/kg):</div>
+                    <div class="range">-</div>
+                    <input type="number" id="multivitamins" placeholder="Enter value">
+                    <button onclick="calculateMultivitamins()">Calculate</button>
+                    <button onclick="calculateMultivitaminsPriming()">With Priming</button>
+                    <span id="multiResult"></span>
+                    <span id="multiprimingResult"></span>
+                </div>
+                
+                <!-- Trace Elements -->
+                 <div class="row">
+                    <div class="label">Trace Elements (mg/kg):</div>
+                    <div class="range">0-4 mg</div>
+                    <input type="number" id="traceElements" placeholder="Enter value">
+                    <button onclick="calculateTraceElements()">Calculate</button>
+                    <button onclick="calculateTraceElementsPriming()">With Priming</button>
+                    <span id="traceResult"></span>
+                    <span id="traceprimingResult"></span>
+                </div>
+                
+                <!-- Sterile Water -->
+                 <div class="row">
+                    <div class="label">Sterile Water (ml):</div>
+                    <div class="range">-</div>
+                    <button onclick="calculateSterileWater()">Calculate</button>
+                    <button onclick="calculateSterileWaterPriming()">With Priming</button>
+                    <span id="sterileResult"></span>
+                    <span id="sterileprimingResult"></span>
+                </div>
+                
+                <!-- GIR -->
+                 <div class="row">
+                    <div class="label">GIR (mg/kg/min):</div>
+                    <div class="range">4-12 mg/kg/min</div>
+                    <button onclick="calculateGIR()">Calculate</button>
+                    <span id="girResult"></span>
+                </div>
+                
+                <!-- Dextrose Concentration -->
+                 <div class="row">
+                    <div class="label">Dextrose Concentration (%):</div>
+                    <div class="range">-</div>
+                    <button onclick="calculateDextroseConcentration()">Calculate</button>
+                    <span id="dexconcResult"></span>
+                </div>
+                
+                <!-- Osmolarity -->
+                 <div class="row">
+                    <div class="label">Osmolarity (mosml/L):</div>
+                    <div class="range">-</div>
+                    <button onclick="window.open('https://globalrph.com/medcalcs/osmolarity-calculator-extremely-powerful-tool/', '_blank')">GlobalRPh</button>
+                </div>
+                
+                <!-- Total Calories -->
+                 <div class="row">
+                    <div class="label">Total Calories (kcal/day):</div>
+                    <div class="range">-</div>
+                    <button onclick="calculateTotalCalories()">Calculate</button>
+                    <span id="caloriesResult"></span>
+                </div>
+                
+                <!-- Infusion Rate -->
+                 <div class="row">
+                    <div class="label">Infusion Rate (ml/hr):</div>
+                    <div class="range">-</div>
+                    <button onclick="calculateInfusionRate()">Calculate</button>
+                    <span id="infusionResult"></span>
+                </div>
+
+        </div>
+    </div>
+</body>
+</html>
